@@ -24,6 +24,7 @@
             <option value="mesopotamia">两河流域文明</option>
             <option value ="japan">日本</option>
             <option value="russia">俄国</option>
+            <option value="artist">世界艺术史</option>
         </select>
         VS
         <select id="bottom_select">
@@ -34,48 +35,41 @@
             <option value="mesopotamia">两河流域文明</option>
             <option value ="japan" selected>日本</option>
             <option value="russia">俄国</option>
+            <option value="artist">世界艺术史</option>
         </select>
         author: <a href="http://weibo.com/u/2637623441" target="_blank">@谢帅shawn</a>
     </div>
-
-    <canvas id="main_canvas" width="6500" height="540"></canvas>
 </body>
-<script src="chronology.js"></script>
-<script src="config.js"></script>
+<script src="./js/graph.js"></script>
 <script>
-    var body = document.getElementsByTagName("body")[0];
-    var canvas = document.getElementById("main_canvas");
-    var ctx = canvas.getContext("2d");
+    /**
+     * Created by shawn on 2014/9/8.
+     */
+    let graph = new Graph();
 
-    var top_select = document.getElementById("top_select");
-    var bottom_select = document.getElementById("bottom_select");
+    let top_select = document.getElementById("top_select");
+    let bottom_select = document.getElementById("bottom_select");
 
     function main(){
-        setTimeout(function(){
-            body.scrollLeft = 3611;
-        }, 10);
+        refresh();
 
-
-        drawHistory(ctx, CHINA, "top", 1);
-        drawEvents(ctx, CHINA_EVENTS, "top");
-        drawHistory(ctx, JAPAN, "bottom", 1);
-        drawEvents(ctx, JAPAN_EVENTS, "bottom");
-        drawMark(ctx);
-
-        top_select.onchange = reDraw;
-
-        bottom_select.onchange = reDraw;
+        top_select.onchange = refresh;
+        bottom_select.onchange = refresh;
     }
 
-    function reDraw(){
-        ctx.clearRect(0, 0, 6500, 540);
-        var top = top_select.value.toUpperCase();
-        var bottom = bottom_select.value.toUpperCase();
-        drawHistory(ctx, window[top], "top", 1);
-        drawEvents(ctx, window[top + "_EVENTS"], "top");
-        drawHistory(ctx, window[bottom], "bottom", 1);
-        drawEvents(ctx, window[bottom + "_EVENTS"], "bottom");
-        drawMark(ctx);
+    function refresh() {
+        let top = top_select.value.toLowerCase();
+        let bottom = bottom_select.value.toLowerCase();
+
+        Promise.all([
+            fetch('./data/' + top + '/period.json').then(response => response.json()),
+            fetch('./data/' + top + '/event.json').then(response => response.json()),
+            fetch('./data/' + bottom + '/period.json').then(response => response.json()),
+            fetch('./data/' + bottom + '/event.json').then(response => response.json()),
+        ])
+        .then(jsons => jsons.map(json => json.data))
+        .then(data => graph.render(data))
+        .catch(e => console.warn(e));
     }
 
 </script>

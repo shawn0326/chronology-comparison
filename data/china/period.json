@@ -1,0 +1,176 @@
+{
+  "data": [
+    {
+      "name": "夏",
+      "start": -2029,
+      "end": -1559,
+      "child": []
+    },
+    {
+      "name": "商",
+      "start": -1559,
+      "end": -1046,
+      "child": []
+    },
+    {
+      "name": "西周",
+      "start": -1046,
+      "end": -771,
+      "child": []
+    },
+    {
+      "name": "东周",
+      "start": -770,
+      "end": -256,
+      "child": [
+        {
+          "name": "春秋",
+          "start": -770,
+          "end": -476,
+          "child": []
+        },
+        {
+          "name": "战国",
+          "start": -475,
+          "end": -221,
+          "child": []
+        }
+      ]
+    },
+    {
+      "name": "秦",
+      "start": -221,
+      "end": -207,
+      "child": []
+    },
+    {
+      "name": "西楚",
+      "start": -206,
+      "end": -202,
+      "child": []
+    },
+    {
+      "name": "汉",
+      "start": -202,
+      "end": 220,
+      "child": [
+        {
+          "name": "西汉",
+          "start": -202,
+          "end": 8,
+          "child": []
+        },
+        {
+          "name": "新朝",
+          "start": 8,
+          "end": 23,
+          "child": []
+        },
+        {
+          "name": "东汉",
+          "start": 25,
+          "end": 220,
+          "child": []
+        }
+      ]
+    },
+    {
+      "name": "三国",
+      "start": 220,
+      "end": 280,
+      "child": []
+    },
+    {
+      "name": "晋",
+      "start": 265,
+      "end": 420,
+      "child": [
+        {
+          "name": "西晋",
+          "start": 265,
+          "end": 316,
+          "child": []
+        },
+        {
+          "name": "东晋",
+          "start": 317,
+          "end": 420,
+          "child": []
+        }
+      ]
+    },
+    {
+      "name": "南北朝",
+      "start": 420,
+      "end": 589,
+      "child": []
+    },
+    {
+      "name": "隋",
+      "start": 581,
+      "end": 619,
+      "child": []
+    },
+    {
+      "name": "唐",
+      "start": 618,
+      "end": 907,
+      "child": []
+    },
+    {
+      "name": "五代十国",
+      "start": 891,
+      "end": 979,
+      "child": []
+    },
+    {
+      "name": "宋",
+      "start": 960,
+      "end": 1279,
+      "child": [
+        {
+          "name": "北宋",
+          "start": 960,
+          "end": 1127,
+          "child": []
+        },
+        {
+          "name": "南宋",
+          "start": 1127,
+          "end": 1279,
+          "child": []
+        }
+      ]
+    },
+    {
+      "name": "元",
+      "start": 1271,
+      "end": 1368,
+      "child": []
+    },
+    {
+      "name": "明",
+      "start": 1368,
+      "end": 1644,
+      "child": []
+    },
+    {
+      "name": "清",
+      "start": 1636,
+      "end": 1912,
+      "child": []
+    },
+    {
+      "name": "中华民国",
+      "start": 1912,
+      "end": 1949,
+      "child": []
+    },
+    {
+      "name": "中华人民共和国",
+      "start": 1949,
+      "end": 2014,
+      "child": []
+    }
+  ]
+}
