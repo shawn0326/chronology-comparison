@@ -4,12 +4,17 @@ class Graph {
         this._canvas = document.createElement('canvas');
         this._canvas.width = 6500;
         this._canvas.height = 540;
-        document.body.appendChild(this._canvas);
+        document.getElementById('content').appendChild(this._canvas);
         this._ctx = this._canvas.getContext("2d");
     }
 
     render(data) {
-        this._ctx.clearRect(0, 0, 6500, 540);
+        
+        this._ctx.globalAlpha = 1;
+        this._ctx.fillStyle = "white";
+        this._ctx.fillRect(0, 0, 6500, 540);
+
+        // this._ctx.clearRect(0, 0, 6500, 540);
         
         drawEvents(this._ctx, data[1], "top");
         drawEvents(this._ctx, data[3], "bottom");
@@ -17,6 +22,10 @@ class Graph {
         drawHistory(this._ctx, data[2], "bottom", 1);
         
         drawMark(this._ctx);
+    }
+
+    save() {
+        return saveAsPNG(this._canvas);
     }
 
 }
@@ -106,8 +115,8 @@ function drawEvent(ctx, year, info, side) {
 
     year = year + 4000;
 
-    ctx.strokeStyle = "black";
-    ctx.fillStyle = "black";
+    ctx.strokeStyle = "#ccc";
+    ctx.fillStyle = "#333";
     ctx.lineWidth = 2;
 
     ctx.beginPath();
@@ -148,4 +157,16 @@ function drawEvents(ctx, event_data, side) {
     for (let i = 0; i < event_data.length; i++) {
         drawEvent(ctx, event_data[i].year, event_data[i].info, side);
     }
+}
+
+function saveAsPNG(canvas) {
+    return canvas.toDataURL("image/png");
+}
+
+function saveAsJPG(canvas) {
+    return canvas.toDataURL("image/jpeg");
+}
+
+function saveAsBMP(canvas) {
+    return canvas.toDataURL("image/bmp");
 }

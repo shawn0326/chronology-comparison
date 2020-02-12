@@ -3,43 +3,52 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
-    <title>chronology</title>
-    <style>
-        #control{
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #CCCCCC
-        }
-    </style>
+    <title>历史年表对照</title>
+    <link rel="stylesheet" href="./main.css"/>
 </head>
 <body onload="main();">
-    <div id="control">
-        历史年表对照：
-        <select id="top_select">
-            <option value ="china" selected>中华文明</option>
-            <option value="india">印度河文明</option>
-            <option value="egypt">埃及尼罗河流域文明</option>
-            <option value="greece">希腊爱琴海文明</option>
-            <option value="mesopotamia">两河流域文明</option>
-            <option value ="japan">日本</option>
-            <option value="russia">俄国</option>
-            <option value="artist">世界艺术史</option>
-        </select>
-        VS
-        <select id="bottom_select">
-            <option value ="china">中华文明</option>
-            <option value="india">印度河文明</option>
-            <option value="egypt">埃及尼罗河流域文明</option>
-            <option value="greece">希腊爱琴海文明</option>
-            <option value="mesopotamia">两河流域文明</option>
-            <option value ="japan" selected>日本</option>
-            <option value="russia">俄国</option>
-            <option value="artist">世界艺术史</option>
-        </select>
-        author: <a href="http://weibo.com/u/2637623441" target="_blank">@谢帅shawn</a>
-    </div>
+    <header>
+        <div>历史年表对照</div>
+        <div>
+            <select id="top_select">
+                <option value ="china" selected>中华文明</option>
+                <option value="india">印度河文明</option>
+                <option value="egypt">埃及尼罗河流域文明</option>
+                <option value="greece">希腊爱琴海文明</option>
+                <option value="mesopotamia">两河流域文明</option>
+                <option value ="japan">日本</option>
+                <option value="russia">俄国</option>
+                <option value="artist">世界艺术史</option>
+            </select>
+            &nbsp;VS&nbsp;
+            <select id="bottom_select">
+                <option value ="china">中华文明</option>
+                <option value="india">印度河文明</option>
+                <option value="egypt">埃及尼罗河流域文明</option>
+                <option value="greece">希腊爱琴海文明</option>
+                <option value="mesopotamia">两河流域文明</option>
+                <option value ="japan" selected>日本</option>
+                <option value="russia">俄国</option>
+                <option value="artist">世界艺术史</option>
+            </select>
+        </div>
+    </header>
+    <div id="content"></div>
+    <footer>
+        <div id="control">
+            <input id="save" type="button" value="下载"></input>
+            <input id="zoomout" type="button" value="缩小"></input>
+            <input id="zoomin" type="button" value="放大"></input>
+        </div>
+        <div>
+            历史年表对照 | 仅供学习交流使用
+            <br/>
+            Author: <a href="https://github.com/shawn0326" target="_blank">shawn0326</a>
+        </div>
+    </footer>
+    <div class="mask"></div>
 </body>
+<script src="./libs/iscroll-zoom.js"></script>
 <script src="./js/graph.js"></script>
 <script>
     /**
@@ -50,11 +59,50 @@
     let top_select = document.getElementById("top_select");
     let bottom_select = document.getElementById("bottom_select");
 
+    let myScroll, zoom = 1;
+
     function main(){
         refresh();
 
+        myScroll = new IScroll('#content', {
+            scrollbars: true,
+            scrollX: true,
+            zoom: true,
+            mouseWheel: true,
+            // wheelAction: 'zoom',
+            zoomMin: 0.2,
+            zoomMax: 1,
+            eventPassthrough: true
+        });
+
+        myScroll.scrollTo(-3500, 0);
+        // myScroll.zoom(0.5);
+
         top_select.onchange = refresh;
         bottom_select.onchange = refresh;
+
+        document.getElementById("save").onclick = function () {
+            downLoad(graph.save());
+        }
+        document.getElementById("zoomout").onclick = function () {
+            zoom = Math.max(0.2, zoom - 0.2);
+            myScroll.zoom(zoom);
+
+            document.getElementById("zoomin").disabled = false;
+            if (zoom  === 0.2) {
+                document.getElementById("zoomout").disabled = true;
+            }
+        }
+        document.getElementById("zoomin").onclick = function () {
+            zoom = Math.min(1, zoom + 0.2);
+            myScroll.zoom(zoom);
+
+            document.getElementById("zoomout").disabled = false;
+            if (zoom === 1) {
+                document.getElementById("zoomin").disabled = true;
+            }
+        }
+        document.getElementById("zoomin").disabled = true;
     }
 
     function refresh() {
@@ -70,6 +118,19 @@
         .then(jsons => jsons.map(json => json.data))
         .then(data => graph.render(data))
         .catch(e => console.warn(e));
+    }
+
+    /**
+     * @author web得胜
+     * @param {String} url 需要下载的文件地址
+     * */
+    function downLoad(url){
+        var oA = document.createElement("a");
+        oA.download = top_select.value.toLowerCase() + '_vs_' + bottom_select.value.toLowerCase();// 设置下载的文件名，默认是'下载'
+        oA.href = url;
+        document.body.appendChild(oA);
+        oA.click();
+        oA.remove(); // 下载之后把创建的元素删除
     }
 
 </script>
