@@ -3,6 +3,10 @@
 
 以对比的形式展示各个文明或维度的发展时间线。
 
+--[Online]()--
+
+![screenshot](./screenshot.png)
+
 ### 参考资料：
 
 [世界数字图书馆-世界历史时间线](https://www.wdl.org/zh/sets/world-history/timeline/#39)
